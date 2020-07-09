@@ -14,7 +14,7 @@ export default Controller.extend({
       if (isCreating) {
         promise = this.get("locationService").createCity(this.get("model.location"));
       } else {
-        promise = this.get("locationService").update(
+        promise = this.get("locationService").updateCity(
           id,
           this.get("model.location")
         );
