@@ -8,6 +8,7 @@ export default Component.extend({
   rating: null,
   sortBy: null,
   cuisine: null,
+  filterBy: null,
 
   cuisineService: service("cuisine-service"),
   cuisines: null,
