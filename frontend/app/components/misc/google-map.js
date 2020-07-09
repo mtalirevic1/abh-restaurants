@@ -4,7 +4,7 @@ export default Component.extend({
   editableMarker: false,
   editableBounds: false,
 
-  classNames: ['map-canvas'],
+  classNames: ["map-canvas"],
 
   didInsertElement(...args) {
     this._super(...args);
@@ -13,8 +13,11 @@ export default Component.extend({
 
   renderGoogleMap(container) {
     let options = {
-      center: new window.google.maps.LatLng(43.9, 18),
-      zoom: 7
+      center: new window.google.maps.LatLng(
+        parseFloat(this.get("latitude")),
+        parseFloat(this.get("longitude"))
+      ),
+      zoom: 7,
     };
 
     let map = new window.google.maps.Map(container, options);
@@ -27,10 +30,22 @@ export default Component.extend({
       bounds !== null && bounds.length > 0
         ? bounds
         : [
-            { lat: 44.773, lng: 17.244 },
-            { lat: 43.624, lng: 17.31 },
-            { lat: 43.63, lng: 18.904 },
-            { lat: 44.773, lng: 18.907 }
+            {
+              lat: parseFloat(this.get("latitude")),
+              lng: parseFloat(this.get("longitude")),
+            },
+            {
+              lat: parseFloat(this.get("latitude")),
+              lng: parseFloat(this.get("longitude")),
+            },
+            {
+              lat: parseFloat(this.get("latitude")),
+              lng: parseFloat(this.get("longitude")),
+            },
+            {
+              lat: parseFloat(this.get("latitude")),
+              lng: parseFloat(this.get("longitude")),
+            },
           ];
 
     const zoomBounds = new google.maps.LatLngBounds();
@@ -57,7 +72,7 @@ export default Component.extend({
 
     const marker = new google.maps.Marker({
       position: markerPosition,
-      draggable: this.get("editableMarker")
+      draggable: this.get("editableMarker"),
     });
 
     marker.setMap(map);
@@ -72,10 +87,10 @@ export default Component.extend({
       fillOpacity: 0.1,
       editable: this.get("editableBounds"),
       draggable: this.get("editableBounds"),
-      geodesic: true
+      geodesic: true,
     });
 
     polygon.setMap(map);
     this.set("polygon", polygon);
-  }
+  },
 });
