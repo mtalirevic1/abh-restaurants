@@ -140,20 +140,15 @@
               About
               {{model.restaurant.name}}
             </h2>
-            <div style="margin:0 -30px 0">
-              {{misc/google-map
-                marker=marker
-                polygon=polygon
-                defaultMerkerPosition=defaultMerkerPosition
-                bounds=model.restaurant.city.bounds
-                markerLat=model.restaurant.latitude
-                markerLng=model.restaurant.longitude
-                editableMarker=true
-              }}
+
+            <div>
+              {{misc/google-map latitude=model.restaurant.latitude longitude=model.restaurant.longitude}}
             </div>
+
             <h5 class="restaurant-card-subtitle">
               Description
             </h5>
+
             <p class="restaurant-card-bodytext">
               {{model.restaurant.description}}
             </p>
@@ -176,6 +171,11 @@
             {{restaurant/menu-list items=dinnerMenu}}
             {{/ui/tab-pane-content}}
             {{/ui/tab-pane}}
+          </div>
+          <div class="restaurant-card">
+            <h5 class="restaurant-card-subtitle">
+              Restaurants photos
+            </h5>
           </div>
         </div>
       </div>
