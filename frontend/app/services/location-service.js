@@ -21,3 +21,5 @@ export default BaseService.extend({
     return this.delete(`/api/v1/city/${id}`);
   }
 });
+
+
