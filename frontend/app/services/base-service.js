@@ -2,7 +2,7 @@ import AjaxService from "ember-ajax/services/ajax";
 
 export default AjaxService.extend({
   post(path, data) {
-    console.log(data);
+
     return this.request(path, {
       method: "POST",
       contentType: "application/json",
@@ -11,6 +11,7 @@ export default AjaxService.extend({
   },
 
   put(path, data) {
+    console.log(data);
     return this.request(path, {
       method: "PUT",
       contentType: "application/json",
