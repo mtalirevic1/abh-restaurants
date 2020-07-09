@@ -12,12 +12,9 @@ public class UserDetails extends PageBase {
     final static private String RESERVATION_LIST_CSS = "div[class = 'reservation-list'] div span";
     final static private String LOG_OUT_BUTTON_CSS = "div[class = 'user-page-bar'] ul li";
 
-
-
     public UserDetails(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
         initElements();
-
     }
 
     @FindBy(css = RESERVATION_LIST_CSS)
@@ -26,19 +23,20 @@ public class UserDetails extends PageBase {
     @FindBy(css = LOG_OUT_BUTTON_CSS)
     private List<WebElement> logOutButton;
 
-    public List<WebElement> getReservationList(){
+    public List<WebElement> getReservationList() {
         return reservationList;
     }
-    public List<WebElement> getLogOutButton(){return logOutButton;}
 
-    public Boolean checkReservationDetails(String restaurantReservation,int index){
+    public List<WebElement> getLogOutButton() {
+        return logOutButton;
+    }
+
+    public Boolean checkReservationDetails(String restaurantReservation, int index) {
         return restaurantReservation.equals(getReservationList().get(index).getText());
     }
 
-    public HomePage clickLogoutButton(){
+    public HomePage clickLogoutButton() {
         getLogOutButton().get(1).click();
         return new HomePage(getDriver());
     }
-
-
 }
