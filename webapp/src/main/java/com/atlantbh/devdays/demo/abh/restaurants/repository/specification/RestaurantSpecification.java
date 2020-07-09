@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.repository.specification;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant_;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantFilter;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,8 +26,32 @@ public class RestaurantSpecification implements Specification<Restaurant> {
 
   @Override
   public Predicate toPredicate(
+      /**
+       * builder.like( builder.lower( root.get( type.getDeclaredSingularAttribute("firstname",
+       * String.class) ) ), "%" + keyword.toLowerCase() + "%" )
+       */
       Root<Restaurant> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-    return null;
+    Predicate defaultQuery = criteriaBuilder.like(root.get(Restaurant_.NAME), "%" + "%");
+    Predicate predicate = null;
+    if (filter != null && filter.getName() != null) {
+      predicate =
+          criteriaBuilder.and(
+              (!filter.getName().toString().isEmpty())
+                  ? criteriaBuilder.like(
+                      criteriaBuilder.lower(root.get(Restaurant_.NAME)),
+                      filter.getName().toLowerCase() + "%")
+                  : defaultQuery,
+              (filter.getPrice() != null)
+                  ? criteriaBuilder.equal(root.get(Restaurant_.PRICE_RANGE), filter.getPrice())
+                  : defaultQuery,
+              (filter.getRating() != null)
+                  ? criteriaBuilder.equal(
+                      criteriaBuilder.toLong(root.get(Restaurant_.AVERAGE_RATING)),
+                      filter.getRating())
+                  : defaultQuery);
+    }
+    return predicate;
+    //    return criteriaBuilder.like(root.get(Restaurant_.NAME), filter.getName() + "%");
   }
 
   /**

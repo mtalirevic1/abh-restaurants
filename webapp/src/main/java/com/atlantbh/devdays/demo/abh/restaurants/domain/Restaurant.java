@@ -71,7 +71,6 @@ public class Restaurant {
   @Column(name = "longitude")
   private Float longitude;
 
-  @JsonIgnore
   @OneToMany(mappedBy = "restaurant")
   private List<RestaurantPhoto> photos;
 

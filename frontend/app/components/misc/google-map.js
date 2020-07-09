@@ -30,23 +30,23 @@ export default Component.extend({
       bounds !== null && bounds.length > 0
         ? bounds
         : [
-            {
-              lat: parseFloat(this.get("latitude")),
-              lng: parseFloat(this.get("longitude")),
-            },
-            {
-              lat: parseFloat(this.get("latitude")),
-              lng: parseFloat(this.get("longitude")),
-            },
-            {
-              lat: parseFloat(this.get("latitude")),
-              lng: parseFloat(this.get("longitude")),
-            },
-            {
-              lat: parseFloat(this.get("latitude")),
-              lng: parseFloat(this.get("longitude")),
-            },
-          ];
+          {
+            lat: parseFloat(this.get("latitude")),
+            lng: parseFloat(this.get("longitude")),
+          },
+          {
+            lat: parseFloat(this.get("latitude")),
+            lng: parseFloat(this.get("longitude")),
+          },
+          {
+            lat: parseFloat(this.get("latitude")),
+            lng: parseFloat(this.get("longitude")),
+          },
+          {
+            lat: parseFloat(this.get("latitude")),
+            lng: parseFloat(this.get("longitude")),
+          },
+        ];
 
     const zoomBounds = new google.maps.LatLngBounds();
     for (let coordiante in coords) {

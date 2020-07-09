@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.*;
+import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantPhotoRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantReviewRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantTableRepository;
@@ -28,6 +29,12 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   private RestaurantReviewRepository restaurantReviewRepository;
   private CuisineService cuisineService;
   private RestaurantTableRepository restaurantTableRepository;
+  private RestaurantPhotoRepository restaurantPhotoRepository;
+
+  @Autowired
+  public void setRestaurantPhotoRepository(RestaurantPhotoRepository restaurantPhotoRepository) {
+    this.restaurantPhotoRepository = restaurantPhotoRepository;
+  }
 
   @Autowired
   public void setRestaurantTableRepository(RestaurantTableRepository restaurantTableRepository) {
@@ -57,11 +64,6 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   @Autowired
   public void setRestaurantReviewRepository(RestaurantReviewRepository restaurantReviewRepository) {
     this.restaurantReviewRepository = restaurantReviewRepository;
-  }
-
-  @Override
-  public Restaurant get(Long aLong) throws EntityNotFoundServiceException {
-    return populateItem(super.get(aLong));
   }
 
   /**
@@ -96,6 +98,10 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     final Pageable pageRequest = RestaurantSpecification.createPage(filter);
     final Page<Restaurant> restaurants =
         repository.findAll(new RestaurantSpecification(filter), pageRequest);
+    restaurants.filter(
+        restaurant -> {
+          return restaurant.getName().startsWith(filter.getName());
+        });
     return transformPage(restaurants, pageRequest);
   }
 
@@ -253,6 +259,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   @Override
   protected Restaurant populateItem(Restaurant item) {
     populateTables(item);
+    item.setPhotos(null);
     return item;
   }
 
@@ -264,5 +271,13 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   private void populateTables(Restaurant restaurant) {
     final List<RestaurantTable> tables = restaurantTableRepository.findByRestaurant(restaurant);
     restaurant.setTables(tables);
+  }
+
+  @Override
+  public Restaurant get(Long aLong) throws EntityNotFoundServiceException {
+    Restaurant restaurant = populateItem(super.get(aLong));
+    final List<RestaurantPhoto> photos = restaurantPhotoRepository.findByRestaurant(restaurant);
+    restaurant.setPhotos(photos);
+    return restaurant;
   }
 }
