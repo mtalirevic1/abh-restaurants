@@ -10,7 +10,6 @@ public abstract class PageBase {
     private WebDriver driver;
 
     public PageBase() {
-
     }
 
     public PageBase(WebDriver driver, String pageUrlRegex) {

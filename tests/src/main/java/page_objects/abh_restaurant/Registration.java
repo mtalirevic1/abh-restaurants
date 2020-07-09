@@ -88,6 +88,5 @@ public class Registration extends PageBase {
         getConfirmPassword().sendKeys(confirmPassword);
         getConfirmRegistrationButton().click();
         return new HomePage(getDriver());
-
     }
 }
