@@ -6,21 +6,21 @@ export default Controller.extend({
 
   actions: {
     submitCity() {
-      const id = this.get("model.city.id");
+      const id = this.get("model.location.id");
       const isCreating = typeof id === "undefined";
-
+      console.log(this.get("model.location"));
       let promise;
 
       if (isCreating) {
-        promise = this.get("locationService").createCity(this.get("model.city"));
+        promise = this.get("locationService").createCity(this.get("model.location"));
       } else {
         promise = this.get("locationService").update(
           id,
-          this.get("model.city")
+          this.get("model.location")
         );
       }
 
-      promise.then(() => this.transitionToRoute("admin.location"));
+      promise.then(() => this.transitionToRoute("admin.locations")).catch(error => console.log(error));
     }
   }
 });
